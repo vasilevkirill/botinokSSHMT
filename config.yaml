@@ -1,0 +1,3 @@
+routerlist: ./router.txt
+importfile: ./botinok.rsc
+savepath: ./result
