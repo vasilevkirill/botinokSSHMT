@@ -45,7 +45,7 @@ func main() {
 		if _, err := os.Stat(dst); os.IsNotExist(err) {
 			fmt.Printf("no such file or directory: %s", dst)
 		} else {
-			fmt.Println("File copy to Device")
+			//fmt.Println("File copy to Device", k.Address)
 		}
 		_ = session.Close()
 		sessionN, err := sshclient.NewSession()
@@ -130,7 +130,8 @@ func scanDevice() error {
 	for scanner.Scan() { // internally, it advances token based on sperator
 		s := strings.Split(scanner.Text(), config.GetString("delimiter"))
 		if len(s) != 3 {
-			return errorStringNotTrueFormat
+			continue
+			//return errorStringNotTrueFormat
 		}
 		x := Device{
 			Address:    s[0],
