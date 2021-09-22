@@ -29,13 +29,13 @@ func main() {
 	for _, k := range dv {
 		sshclient, err := connectSSH(k)
 		if err != nil {
-			fmt.Println("Error connection new SSH session", err)
+			fmt.Println("Error connection new SSH session", err, k.Address)
 			_ = sshclient.Close()
 			continue
 		}
 		session, err := sshclient.NewSession()
 		if err != nil {
-			fmt.Println("NewSession error", err)
+			fmt.Println("NewSession error", err, k.Address)
 			_ = session.Close()
 			_ = sshclient.Close()
 			continue
@@ -50,7 +50,7 @@ func main() {
 		_ = session.Close()
 		sessionN, err := sshclient.NewSession()
 		if err != nil {
-			fmt.Println("NewSession error", err)
+			fmt.Println("NewSession error", err, k.Address)
 			_ = sessionN.Close()
 			_ = sshclient.Close()
 			continue
@@ -58,13 +58,13 @@ func main() {
 		var b bytes.Buffer
 		sessionN.Stdout = &b
 		if err := sessionN.Run(config.GetString("ssh.command")); err != nil {
-			fmt.Println("Run command error", err)
+			fmt.Println("Run command error", err, k.Address)
 			_ = sessionN.Close()
 			_ = sshclient.Close()
 			continue
 		}
 		if err := sessionN.Run(config.GetString("ssh.command-post")); err != nil {
-			fmt.Println("Run command error", err)
+			fmt.Println("Run command error", err, k.Address)
 			_ = sessionN.Close()
 			_ = sshclient.Close()
 			continue
